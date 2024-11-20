@@ -35,3 +35,27 @@ a {
 h5{
   color: var(--text2);
 }
+
+#searchInputContainer{
+  display: flex;
+  align-items: center;
+  gap: 5%;
+  width: 800px;
+  background-color: var(--secondary);
+  padding: 15px 20px;
+  border-radius: 40px;
+  margin: 40px 0px;
+}
+#searchInput{
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+#searchInput::placeholder {
+  color: var(--primary);
+  opacity: 50%;
+  font-weight: 600;
+}
+#searchInput:focus{
+  outline: none;
+}
