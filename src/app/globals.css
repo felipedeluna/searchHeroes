@@ -36,11 +36,16 @@ h5{
   color: var(--text2);
 }
 
+#container{
+  width: 1024px;
+  margin: auto;
+}
+
 #searchInputContainer{
   display: flex;
   align-items: center;
   gap: 5%;
-  width: 800px;
+  width: 80%;
   background-color: var(--secondary);
   padding: 15px 20px;
   border-radius: 40px;

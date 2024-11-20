@@ -1,8 +1,40 @@
+/*HEADER STYLES*/
+
 .header{
   display: flex;
-  width: 100vw;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+/*MAIN STYLES*/
+
+.mainHeader{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainHeader h3{
+  color: var(--text2);
+  font-weight: 500;
+}
+.mainToggle{
+  display: flex;
+  gap: 30px;
+}
+.toggleButton{
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+.mainToggleText{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary);
 }
