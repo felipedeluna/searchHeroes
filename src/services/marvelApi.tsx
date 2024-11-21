@@ -20,6 +20,7 @@ export async function buscarHeroisHome(nomeIniciaCom = '',nome = '', limite = 20
             ts,
             hash,
             limit: limite,
+            orderBy: "-modified",
             ...(nomeIniciaCom && { nameStartsWith: nomeIniciaCom }),
             ...(nome && {name: nome})
             },

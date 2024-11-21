@@ -63,6 +63,21 @@
   gap: 10px;
   color: var(--primary);
 }
+.mainFavoriteText{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary);
+  padding: 0 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.mainFavoriteText:hover{
+  background-color: var(--secondary);
+}
+.mainFavoriteTextActive{
+  background-color: var(--secondary);
+}
 
 .gridCards{
   display: grid;

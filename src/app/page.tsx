@@ -5,10 +5,10 @@ import styles from "./page.module.css";
 import ToggleButton from "@/components/ToggleButton";
 import Card from "@/components/Card";
 import { buscarHeroisHome } from "@/services/marvelApi";
+import { insertFavorito } from "@/utils/favorite";
 
 export default function Home() {
   const [herois, setHerois] = useState<any[]>([]);
-
   const [favoritos, setFavoritos] = useState<number[]>(() => {
     if (typeof window !== "undefined") {
       const savedFavoritos = localStorage.getItem("favoritos");
@@ -16,45 +16,38 @@ export default function Home() {
     }
     return [];
   });
+  const [mostrarFavoritos, setMostrarFavoritos] = useState(false);
+  const [heroisFiltrados, setHeroisFiltrados] = useState<any[]>([]);
+  const search = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = event.target.value.toLowerCase();
+  
+    setHeroisFiltrados(() =>
+      (mostrarFavoritos
+        ? herois.filter((heroi) => favoritos.includes(heroi.id))
+        : herois
+      ).filter((heroi) => heroi.name.toLowerCase().includes(searchValue))
+    );
+  };
 
-  const [pesquisa, setPesquisa] = useState<string>("");
-
-  // Busca inicial dos herois
   useEffect(() => {
     async function obterHerois() {
       const dados = await buscarHeroisHome();
       setHerois(dados);
+      setHeroisFiltrados(dados);
     }
     obterHerois();
   }, []);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favoritos", JSON.stringify(favoritos));
     }
   }, [favoritos]);
-
   useEffect(() => {
     const savedFavoritos = localStorage.getItem("favoritos");
     if (savedFavoritos) {
         setFavoritos(JSON.parse(savedFavoritos));
     }
   }, []);
-
-  const insertFavorito = (id: number) => {
-    setFavoritos((prevFavoritos) => 
-      {
-        if (prevFavoritos.includes(id)) {
-          return prevFavoritos.filter((favId) => favId !== id);
-        }
-        if (prevFavoritos.length >= 5) {
-          alert("Você só pode favoritar até 5 personagens!");
-          return prevFavoritos;
-        }
-            return [...prevFavoritos, id];
-      } 
-    );
-};
 
   return (
     <div>
@@ -76,13 +69,13 @@ export default function Home() {
                 width={20}
                 height={20}
             />
-            <input className={styles.searchInput} type="text" placeholder="Procure por herois"/>
+            <input className={styles.searchInput} type="text" placeholder="Procure por herois" onChange={search}/>
         </div>
       </header>
       <main>
         <section className={styles.mainHeader}>
           <h3>
-            Encontrados {herois.length} heróis
+            Encontrados {heroisFiltrados.length} heróis
           </h3>
           <div className={styles.mainToggle}>
             <div className={styles.mainToggleText}>
@@ -95,10 +88,19 @@ export default function Home() {
               Ordenar por nome - A/Z
             </div>
             <ToggleButton/>
-            <div className={styles.mainToggleText}>
+            <div className={`${styles.mainFavoriteText} ${
+                mostrarFavoritos ? styles.mainFavoriteTextActive : ""}`}
+            onClick={() => {
+              setMostrarFavoritos((bol) => !bol);
+              setHeroisFiltrados(() =>
+                mostrarFavoritos
+                  ? herois
+                  : herois.filter((heroi) => favoritos.includes(heroi.id))
+              );
+            }}>
               <Image
                 src="/assets/icones/heart/Path.svg"
-                alt="Logo do Grupo"
+                alt="coração"
                 width={15}
                 height={25}
               />
@@ -107,15 +109,14 @@ export default function Home() {
           </div>
         </section>
         <section className={styles.gridCards}>
-
-        {herois.map((heroi) => (
+        {heroisFiltrados.map((heroi) => (
             <Card
               key={heroi.id}
               heroId={heroi.id}
               heroName={heroi.name}
               heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
               isFavorited={favoritos.includes(heroi.id)}
-              onSelect={() => insertFavorito(heroi.id)}
+              onSelect={() => insertFavorito(heroi.id, setFavoritos)}
             />
           ))}
         </section>

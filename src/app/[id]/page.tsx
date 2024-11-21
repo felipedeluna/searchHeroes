@@ -5,17 +5,27 @@ import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import styles from "./page.module.css";
 import { buscarHeroi, buscarQuadrinhosHeroi } from "@/services/marvelApi";
+import { insertFavorito } from "@/utils/favorite";
 
 
 export default function HeroPage() {
     const [heroi, setHeroi] = useState<any[]>([]);
     const [quadrinhosHeroi, setQuadrinhosHeroi] = useState<any[]>([]);
-    const [favoritos, setFavoritos] = useState<any[]>([]);
+    const [favoritos, setFavoritos] = useState<number[]>(() => {
+        if (typeof window !== "undefined") {
+            const savedFavoritos = localStorage.getItem("favoritos");
+            return savedFavoritos ? JSON.parse(savedFavoritos) : [];
+        }
+        return [];
+    });
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
     const pathname = usePathname()
     const id = pathname.split('/').pop();
 
-  // Busca inicial dos herois
     useEffect(() => {
     async function obterHeroi() {
         const dados = await buscarHeroi(id as string);
@@ -31,9 +41,28 @@ export default function HeroPage() {
     }
     obterQuadrinhosHeroi();
     }, [id]);
-
-    console.log(heroi)
-
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        }
+    }, [favoritos]);
+    useEffect(() => {
+        const savedFavoritos = localStorage.getItem("favoritos");
+        if (savedFavoritos) {
+            setFavoritos(JSON.parse(savedFavoritos));
+        }
+    }, []);
+    
+    function formatDate(dateString: string | undefined): string {
+        if (!dateString) return " ";
+        
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, "0"); // Obtém o dia com dois dígitos
+        const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Obtém o mês (0-indexado, por isso +1)
+        const year = date.getFullYear(); // Obtém o ano
+        
+        return `${day} / ${month} / ${year}`;
+        }
     return (
     <div className={styles.backgroundHeroPage}>
     <div id="container">
@@ -66,10 +95,21 @@ export default function HeroPage() {
                 <div className={styles.nameHero}>
                     <h1>{heroi[0]?.name}</h1>
                     <Image
-                        src="/assets/icones/heart/PathCopy2@1,5x.svg"
-                        alt="Logo do Grupo"
-                        width={25}
-                        height={25}/>
+                    src={
+                        favoritos.includes(Number(id))
+                            ? "/assets/icones/heart/Path.svg"
+                            : isHovered
+                            ? "/assets/icones/heart/Path Copy 7.svg"
+                            : "/assets/icones/heart/PathCopy2@1,5x.svg"
+                    }
+                    alt="Logo do Grupo"
+                    width={25}
+                    height={25}
+                    className={styles.favoriteIcon}
+                    onClick={() => insertFavorito(Number(id), setFavoritos)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
                 </div>
                 <p>{heroi[0]?.description}</p>
                 <div className={styles.heroAppearances}>
@@ -102,7 +142,7 @@ export default function HeroPage() {
                     />
                 </div>
                 <div>
-                    Ultimo quadrinho: {heroi[0]?.modified}
+                    Ultimo quadrinho: {formatDate(quadrinhosHeroi[0]?.modified)}
                 </div>
             </section>
             <div className={styles.imageHeroOverview}>

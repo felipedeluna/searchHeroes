@@ -50,6 +50,13 @@ outline: none;
     display: flex;
     justify-content: space-between;
 }
+.favoriteIcon{
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.favoriteIcon:hover {
+transform: scale(1.1);
+}
 .imageHeroOverview{
     z-index: 1;
     display: flex;
