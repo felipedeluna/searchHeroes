@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import ToggleButton from "@/components/ToggleButton";
 import Card from "@/components/Card";
-import { buscarHerois } from "@/services/marvelApi";
+import { buscarHeroisHome } from "@/services/marvelApi";
 
 export default function Home() {
   const [herois, setHerois] = useState<any[]>([]);
@@ -14,7 +14,7 @@ export default function Home() {
   // Busca inicial dos herois
   useEffect(() => {
     async function obterHerois() {
-      const dados = await buscarHerois();
+      const dados = await buscarHeroisHome();
       setHerois(dados);
     }
     obterHerois();
@@ -74,6 +74,7 @@ export default function Home() {
         {herois.map((heroi) => (
             <Card
               key={heroi.id}
+              heroId={heroi.id}
               heroName={heroi.name}
               heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
             />

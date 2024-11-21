@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../app/page.module.css";
 
 export default function Card(props:any){
     return (
         <div>
+            <Link href={`/${props.heroId}`}>
             <Image
                 src={props.heroImage ?? "/assets/card/hero.png"}
                 alt="Logo do Grupo"
@@ -11,6 +13,7 @@ export default function Card(props:any){
                 height={0}
                 className={styles.imageCard}
             />
+            </Link>
             <div className={styles.footerCard}>
                 {props.heroName ?? 'nome do heroi'}
                 <Image
