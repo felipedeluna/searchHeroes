@@ -71,6 +71,7 @@
   padding: 0 10px;
   border-radius: 20px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 .mainFavoriteText:hover{
   background-color: var(--secondary);
@@ -91,6 +92,7 @@
   height: 200px;
   border-bottom: 4px solid var(--primary);
   cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 .imageCard:hover{
   opacity: 50%;
