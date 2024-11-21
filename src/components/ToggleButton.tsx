@@ -19,7 +19,7 @@ return (
     >
     {isToggled ? (
         <Image
-        src="/assets/toggle/Group6.svg"
+        src="/assets/toggle/Group2.svg"
         alt="Logo do Grupo"
         layout="intrinsic"
         width={60}
@@ -27,7 +27,7 @@ return (
     />
     ) : (
         <Image
-        src="/assets/toggle/Group2.svg"
+        src="/assets/toggle/Group6.svg"
         alt="Logo do Grupo"
         layout="intrinsic"
         width={60}
