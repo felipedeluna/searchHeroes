@@ -4,8 +4,8 @@ require('dotenv').config();
 
 const nextConfig: NextConfig = {
   env: {
-    NEXT_PUBLIC_KEY: process.env.NEXT_PUBLIC_KEY,
-    NEXT_PRIVATE_KEY: process.env.NEXT_PRIVATE_KEY,
+    MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
+    MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY,
   },
   images: {
     remotePatterns: [

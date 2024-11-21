@@ -2,8 +2,8 @@ import axios from "axios";
 import { createHash } from "crypto";
 
 const BASE_URL = "https://gateway.marvel.com:443/v1/public/"
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_KEY;
-const PRIVATE_KEY = process.env.NEXT_PRIVATE_KEY;
+const PUBLIC_KEY = process.env.MARVEL_PUBLIC_KEY;
+const PRIVATE_KEY = process.env.MARVEL_PRIVATE_KEY;
 
 export async function buscarHeroisHome(nomeIniciaCom = '',nome = '', limite = 20) {
     
