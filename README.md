@@ -53,9 +53,8 @@ Crie um arquivo chamado .env.local no diretório raiz do projeto.
 Insira as seguintes variáveis:
 
 ````
-NEXT_PUBLIC_MARVEL_API_KEY=<SUA_CHAVE_PUBLICA>
+MARVEL_PUBLIC_KEY=<SUA_CHAVE_PUBLICA>
 MARVEL_PRIVATE_KEY=<SUA_CHAVE_PRIVADA>
-NEXT_PUBLIC_BASE_URL=https://gateway.marvel.com:443/v1/public/characters
 ````
 
 Substitua <SUA_CHAVE_PUBLICA> e <SUA_CHAVE_PRIVADA> pelos valores da sua conta da API da Marvel.
