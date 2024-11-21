@@ -90,4 +90,8 @@
 }
 .favoriteIcon{
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.favoriteIcon:hover {
+  transform: scale(1.1);
 }
