@@ -8,7 +8,13 @@ const nextConfig: NextConfig = {
     NEXT_PRIVATE_KEY: process.env.NEXT_PRIVATE_KEY,
   },
   images: {
-    domains: ['i.annihil.us'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'i.annihil.us',
+        pathname: '**',
+      },
+    ]
   },
 };
 
